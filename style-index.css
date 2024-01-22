@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Moirai+One&display=swap');
 :root{
     --variable : 30px;
 }
@@ -6,6 +7,17 @@
 body {
     background-color: lightgray;
     font-family: 'Poppins';
+    text-align: center;
+}
+
+.main_title {
+    font-family: 'Moirai One';
+    font-size: 64px;
+    text-shadow: 4px 4px 12px rgba(0, 0, 0, 0.69);
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .login_container {

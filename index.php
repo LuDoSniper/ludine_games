@@ -3,11 +3,6 @@
 
     require_once 'objets.php';
 
-    function logout(): void {
-        session_destroy();
-        header('Location: index.php');
-    }
-
     function check_login(BDD $bdd): bool{
         $select_users = $bdd->get_bdd()->prepare("SELECT * FROM users");
         $select_users->execute();
@@ -34,10 +29,6 @@
         $try_login = false;
     }
 
-    if (isset($_GET['logout'])){
-        logout();
-    }
-
     // Personnalisation du message à la connexion
     if ($try_login && $check){
         $message = 'Connexion réussie.';
@@ -61,6 +52,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     </head>
     <body>
+        <h1 class="main_title">Ludine Games</h1>
         <div id="overlay" onclick="hide()"></div>
         <button id="login" onclick="show()"><span class="material-symbols-outlined icon-user_circle">account_circle</span> Se connecter</button>
             <form action="index.php" method="post">
