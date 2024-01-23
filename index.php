@@ -3,16 +3,24 @@
 
     require_once 'objets.php';
 
-    function check_login(BDD $bdd): bool{
+    function check_login(BDD $bdd, bool $session = false): bool{
+
         $select_users = $bdd->get_bdd()->prepare("SELECT * FROM users");
         $select_users->execute();
         $users = $select_users->fetchALL(PDO::FETCH_ASSOC);
 
-        $username = $_POST['username'];
-        $password = $_POST['password'];
+        if ($session) {
+            $username = $_SESSION['user']['username'];
+            $password = $_SESSION['user']['password'];
+        } else {
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+        }
 
         foreach ($users as $user){
             if ($user['username'] === $username && password_verify($password, $user['password'])){
+                $_SESSION['user'] = $user;
+                $_SESSION['user']['password'] = $password;
                 return true;
             }
         }
@@ -20,7 +28,15 @@
         return false;
     }
 
+    function redirect(): void{
+        header('Location: home.php');
+    }
+
     $bdd = new BDD();
+
+    if (isset($_SESSION['user']) && check_login($bdd, true)){
+        redirect();
+    }
 
     if (isset($_POST['username']) && isset($_POST['password'])){
         $check = check_login($bdd);
@@ -31,14 +47,20 @@
 
     // Personnalisation du message à la connexion
     if ($try_login && $check){
-        $message = 'Connexion réussie.';
-        $class = 'success';
+        redirect();
     } else if ($try_login && !$check) {
         $message = 'Identifiant ou mot de passe incorrect.';
         $class = 'failure';
     } else {
         $message = 'Identifiant ou mot de passe incorrect.';
         $class = 'hidden';
+    }
+
+    // Affichage du login container en cas d'echec
+    if (isset($_POST['state'])){
+        $show = $_POST['state'];
+    } else {
+        $show = false;
     }
 ?>
 
@@ -68,9 +90,11 @@
                         <input type="password" name="password" id="password" required>
                     </div>
                     <p class="message <?php echo $class; ?>"><?php echo $message; ?></p>
+                    <input type="hidden" name="state" value="<?php if ($class === 'failure') {echo 'show';} else {echo 'hide';} ?>">
                     <button>Connexion</button>
                 </div>
             </form>
-            <script src="fichier.js"></script>
+            <script src="script-index.js"></script>
+            <?php if ($show) {?><script>show();</script><?php } ?>
     </body>
 </html>

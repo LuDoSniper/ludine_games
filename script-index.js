@@ -8,5 +8,4 @@ function show(){
     document.getElementById('overlay').style.display = 'block';
 }
 
-hide('login_container');
-hide('overlay');
+hide();
