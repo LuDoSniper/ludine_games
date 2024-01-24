@@ -1,0 +1,218 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Moirai+One&display=swap');
+
+body {
+    font-family: 'Poppins';
+    margin: 0;
+    background-color: #f1f1f1;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #C8C8C8;
+    border-radius: 0px 0px 8px 8px;
+    padding: 5px;
+}
+
+header h1 {
+    font-family: 'Moirai One';
+    font-size: 22px;
+    margin: 0;
+}
+
+header button {
+    background-color: transparent;
+    color: #206efd;
+    border: 1px solid #206efd;
+    border-radius: 16px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: 'Poppins';
+}
+
+header form:nth-child(1) button {
+    height: 28px;
+    width: 28px;
+}
+
+header button:hover {
+    background-color: hsl(219, 98%, 56%, .3);
+}
+
+header .icon-home {
+    font-size: 20px;
+}
+
+.games {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    height: calc(100vh - 50px);
+}
+
+.games .games_row1{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.games .games_row1 .game {
+    background-color: white;
+    box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    margin: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.games .games_row1 .game:hover {
+    transform: scale(1.2);
+}
+
+.games_options {
+    background-color: white;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+}
+
+.games .create {
+    background-color: #32CCE4;
+    color: white;
+    font-family: 'Poppins';
+    font-size: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.games .create:hover{
+    transform: scale(1.2);
+}
+
+.games .create .icon-create {
+    font-size: 28px;
+}
+
+#overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: hsl(0, 0%, 0%, .3);
+}
+
+#form-create {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+    padding: 5px;
+}
+
+#form-create .close, .close {
+    background-color: #32CCE4;
+    color: white;
+    border-radius: 16px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translateX(50%) translateY(-50%);
+    cursor: pointer;
+}
+
+#form-create button {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #32CCE4;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: 'Poppins';
+    font-size: 18px;
+    padding: 5px;
+    margin-top: 5px;
+    transition: all 0.3s ease;
+}
+
+#form-create button:hover {
+    transform: scale(1.1);
+}
+
+.game-options {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: white;
+    border-radius: 8px;
+    flex-direction: column;
+    font-size: 20px;
+    padding: 5px;
+}
+
+.game-options div {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.game-options button:nth-child(1) {
+    background-color: #EA5847;
+    color: #e99086;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    font-size: 28px;
+    margin: 5px;
+}
+
+.game-options button:nth-child(2) {
+    background-color: #32CCE4;
+    color: white;
+    border-radius: 4px;
+    border: none;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    cursor: pointer;
+    font-family: 'Poppins';
+    font-size: 18px;
+    margin: 5px;
+    height: 36px;
+}
+
+.game-options button:nth-child(2) .icon-play {
+    font-size: 28px;
+}

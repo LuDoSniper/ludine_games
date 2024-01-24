@@ -1,7 +1,7 @@
 <?php
 
 class BDD{
-    private string $dsn = 'mysql:host=localhost;dbname=ludine_games-users;charsetutf8';
+    private string $dsn = 'mysql:host=localhost;dbname=ludine_games;charsetutf8';
     private string $username = 'root';
     private string $password = '';
     private PDO $bdd;

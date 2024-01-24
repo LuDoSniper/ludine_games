@@ -70,7 +70,7 @@
             <div class="close"><span class="material-symbols-outlined icon-close" onclick="hide('mastermind'); hide('overlay')">close</span></div>
             <h2>Mastermind</h2>
             <p>BlaBla description du jeu en lui même, il faut que je fasse un texte un avec un minimum de longueur pour voir le comportement</p>
-            <button><span class="material-symbols-outlined icon-game">sports_esports</span> Jouer</button>
+            <form action="mastermind.php" method="post"><button><span class="material-symbols-outlined icon-game">sports_esports</span> Jouer</button></form>
         </div>
         <script src="script-home.js"></script>
         <script>

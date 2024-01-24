@@ -64,6 +64,7 @@ header h1 {
     padding: 5px;
     box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
     transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .mastermind_button:hover {
@@ -72,7 +73,6 @@ header h1 {
 
 .mastermind_button p {
     margin: 0;
-    cursor: default;
 }
 
 .mastermind {
