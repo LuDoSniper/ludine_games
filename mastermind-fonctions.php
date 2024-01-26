@@ -5,8 +5,8 @@
         $bdd = new BDD();
         $bdd = $bdd->get_bdd();
 
-        $select_games = $bdd->prepare("SELECT * FROM mastermind WHERE player2_ID = ?");
-        $select_games->execute([$id]);
+        $select_games = $bdd->prepare("SELECT * FROM mastermind WHERE player2_ID = ? OR player1_ID = ?");
+        $select_games->execute([$id, $id]);
         $games = $select_games->fetchAll(PDO::FETCH_ASSOC);
 
         return $games;
@@ -28,7 +28,7 @@
         return $colors_format;
     }
 
-    function generate_patern(int $longueur): array{
+    function generate_pattern(int $longueur): array{
         $colors = get_colors();
         $pattern = [];
 
@@ -49,7 +49,7 @@
     }
 
     function create_game(int $userID1, int $userID2, int $nb = 4): bool{
-        $pattern = generate_patern($nb);
+        $pattern = generate_pattern($nb);
         $pattern = format_pattern($pattern);
         $turn = rand(1, 2);
         
@@ -153,10 +153,143 @@
         return $games;
     }
 
+    function delete_logs(int $game_id): void{
+        $bdd = new BDD();
+        $bdd = $bdd->get_bdd();
+
+        $delete_logs = $bdd->prepare("DELETE FROM mastermind_log WHERE game_ID = ?");
+        $delete_logs->execute([$game_id]);
+    }
+
     function delete_game_by_ID(int $id): void{
         $bdd = new BDD();
         $bdd = $bdd->get_bdd();
 
         $delete_game = $bdd->prepare("DELETE FROM mastermind WHERE ID = ?");
         $delete_game->execute([$id]);
+    }
+
+    function game_exists(int $id): bool{
+        $bdd = new BDD();
+        $bdd = $bdd->get_bdd();
+
+        $select_game = $bdd->prepare("SELECT * FROM mastermind WHERE ID = ?");
+        $select_game->execute([$id]);
+        $game = $select_game->fetch();
+
+        return $game != false;
+    }
+
+    function get_logs(int $id): array{
+        $bdd = new BDD();
+        $bdd = $bdd->get_bdd();
+
+        $select_logs = $bdd->prepare("SELECT * FROM mastermind_log WHERE game_ID = ? ORDER BY `date`");
+        $select_logs->execute([$id]);
+        $logs = $select_logs->fetchAll(PDO::FETCH_ASSOC);
+
+        return $logs;
+    }
+
+    function generate_logs(int $id): void{
+        $logs = get_logs($id);
+        
+        $tableau = '';
+        foreach ($logs as $log){
+            $tableau .= '<tr><td>'.get_user_by_ID($log['player_ID'])['username'].' :</td><td class="colonne2">'.$log['pattern'].'</td><td class="colonne3">'.$log['resultat'].'</td></tr>';
+        }
+
+        echo '<table><tr><th>Joueur</th><th class="colonne2">Essai</th><th>Résultat</th></tr>'.$tableau.'</table>';
+    }
+
+    function generate_colors(array $colors): void{
+        foreach ($colors as $color){
+            echo '<div class="couleur '.$color.'"></div>';
+        }
+    }
+
+    function get_pattern(int $id): array{
+        $bdd = new BDD();
+        $bdd = $bdd->get_bdd();
+
+        $select_pattern = $bdd->prepare("SELECT pattern FROM mastermind WHERE ID = ?");
+        $select_pattern->execute([$id]);
+        $pattern = $select_pattern->fetch(PDO::FETCH_ASSOC);
+
+        return explode(',', $pattern['pattern']);
+    }
+
+    function check_pattern(int $id, string $pattern): array{
+        $colors = explode(',', $pattern);
+        $ref = get_pattern($id);
+
+        $check = true;
+        $resultat = '';
+        for ($i = 0; $i < count($ref); $i++){
+            if ($i != 0){
+                $resultat .= ',';
+            }
+
+            if (in_array($colors[$i], $ref)){
+                if ($colors[$i] === $ref[$i]){
+                    $resultat .= '2';
+                } else {
+                    $resultat .= '1';
+                    $check = false;
+                }
+            } else {
+                $resultat .= '0';
+                $check = false;
+            }
+        }
+
+        return [$resultat, $check];
+    }
+
+    function write_logs(int $game_id, int $user_id, array $pattern): bool{
+        $pattern = implode(',', $pattern);
+        $tmp = check_pattern($game_id, $pattern);
+        $resultat = $tmp[0];
+        $check = $tmp[1];
+
+        $bdd = new BDD();
+        $bdd = $bdd->get_bdd();
+
+        $insert_log = $bdd->prepare("INSERT INTO mastermind_log (game_ID, player_ID, pattern, resultat) VALUES (?, ?, ?, ?)");
+        $insert_log->execute([$game_id, $user_id, $pattern, $resultat]);
+
+        return $check;
+    }
+
+    function get_turn(int $game_id): int{
+        $bdd = new BDD();
+        $bdd = $bdd->get_bdd();
+
+        $get_turn = $bdd->prepare("SELECT turn FROM mastermind WHERE ID = ?");
+        $get_turn->execute([$game_id]);
+        $turn = $get_turn->fetch(PDO::FETCH_ASSOC)['turn'];
+
+        return $turn;
+    }
+
+    function change_turn(int $game_id): void{
+        $turn = get_turn($game_id);
+        $turn = 3 - $turn;
+
+        $bdd = new BDD();
+        $bdd = $bdd->get_bdd();
+
+        $set_turn = $bdd->prepare("UPDATE mastermind SET turn = ? WHERE ID = ?");
+        $set_turn->execute([$turn, $game_id]);
+    }
+
+    function get_winner(int $game_id){
+        $bdd = new BDD();
+        $bdd = $bdd->get_bdd();
+
+        $select_winner = $bdd->prepare("SELECT player_ID FROM mastermind_log WHERE game_ID = ? ORDER BY `date` DESC LIMIT 1");
+        $select_winner->execute([$game_id]);
+        $winner = $select_winner->fetch(PDO::FETCH_ASSOC)['player_ID'];
+
+        return $winner;
     }

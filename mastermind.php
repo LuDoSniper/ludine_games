@@ -47,6 +47,8 @@
     // Agir sur les games
     if (isset($_POST['delete'])){
         delete_game_by_ID($_POST['delete']);
+    } else if (isset($_POST['play'])){
+        redirect('mastermind_game.php?id='.$_POST['play']);
     }
 
     // Récupérer les games

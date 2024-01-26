@@ -1,0 +1,256 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+:root {
+    --bleu: #4C5BEF;
+    --rouge: #FF3D3D;
+    --jaune: #F1DA2C;
+    --vert: #8FF12C;
+    --violet: #9B2CF1;
+    --orange: #F19B2C;
+}
+
+body {
+    margin: 0;
+    font-family: 'Poppins';
+    background-color: #e9e9e9;
+}
+
+#overlay {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: hsl(0, 0%, 0%, .3);
+    z-index: 1;
+}
+
+#error_window {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    background-color: white;
+    color: #F54444;
+    border-radius: 8px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    z-index: 2;
+    padding: 15px;
+}
+
+.close {
+    background-color: #47C7EA;
+    color: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 16px;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translateX(50%) translateY(-50%);
+}
+
+#end_game {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 8px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    z-index: 2;
+    padding: 15px;
+}
+
+#end_game .win {
+    color: #8FF12C;
+}
+
+#end_game .lose {
+    color: #F54444;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #C8C8C8;
+    border-radius: 0px 0px 8px 8px;
+    padding: 5px;
+}
+
+header form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+header button {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: transparent;
+    color: #206efd;
+    border: 1px solid #206efd;
+    border-radius: 16px;
+    cursor: pointer;
+    font-family: 'Poppins';
+}
+
+header button:hover {
+    background-color: hsl(219, 98%, 56%, .3);
+}
+
+.game {
+    display: flex;
+}
+
+.logs {
+    /* background-color: white;
+    border-radius: 12px; */
+    width: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.playground {
+    /* background-color: white;
+    border-radius: 12px; */
+    width: 50%;
+}
+
+.resultats {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: white;
+    width: 300px;
+    height: 100px;
+    border-radius: 12px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 15px 30px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 18px -18px inset;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.logs table {
+    width: 75%;
+    border-collapse: collapse;
+}
+
+.logs table td:not(:first-child) {
+    text-align: center;
+}
+
+.playground {
+    text-align: center;
+}
+
+.playground .ligne {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: calc(100% - 50px);
+    padding: 25px;
+}
+
+.couleur {
+    width: 25px;
+    height: 50px;
+    border-radius: 16px;
+}
+
+.playground .couleur {
+    width: 50px;
+    height: 50px;
+    border-radius: 16px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.playground .couleur:hover {
+    transform: scale(1.1);
+}
+
+.bleu {
+    background-color: var(--bleu);
+}
+
+.rouge {
+    background-color: var(--rouge);
+}
+
+.jaune {
+    background-color: var(--jaune);
+}
+
+.vert {
+    background-color: var(--vert);
+}
+
+.violet {
+    background-color: var(--violet);
+}
+
+.orange {
+    background-color: var(--orange);
+}
+
+.bas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    width: 100%;
+}
+
+.bas form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.bas button {
+    font-family: 'Poppins';
+    font-size: 16px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.bas button:hover {
+    transform: scale(1.1);
+}
+
+.bas .valider {
+    background-color: #47C7EA;
+    color: white;
+    padding: 5px;
+}
+
+.bas .back, .bas .undo {
+    background-color: #F54444;
+    color: #fa8282fb;
+    padding: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
