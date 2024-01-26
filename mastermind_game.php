@@ -52,6 +52,7 @@
     }
 
     // Gestion du pattern local
+    $state = get_state($_GET['id']);
     if (!isset($_SESSION['pattern'])){
         $_SESSION['pattern'] = [];
     }
@@ -64,24 +65,19 @@
     if (isset($_POST['undo'])){
         $_SESSION['pattern'] = [];
     }
-    if (isset($_POST['valider']) && count($_SESSION['pattern']) === count(get_pattern($_GET['id']))){
+    if ($state === 1 && isset($_POST['valider']) && count($_SESSION['pattern']) === count(get_pattern($_GET['id']))){
         if ((int) $_SESSION['user']['ID'] != get_turn($_GET['id'])){
             $error = true;
         } else {
             $result = write_logs($_GET['id'], $_SESSION['user']['ID'], $_SESSION['pattern']);
             change_turn($_GET['id']);
             $_SESSION['pattern'] = [];
-            $_SESSION['result'] = $result;
+            change_state($_GET['id'], $result === false);
         }
     }
 
     // Gestion des messages de résultat
-    if (isset($_SESSION['result'])){
-        $result = $_SESSION['result'];
-    }
-    if (isset($result) && $result){
-        var_dump($_SESSION['user']['ID']);
-        var_dump(get_winner($_GET['ID']));
+    if ($state === 0){
         if ($_SESSION['user']['ID'] == get_winner($_GET['id'])){
             $titre = 'Victoire !';
             $message = 'Vous avez remporté la partie.';
@@ -89,6 +85,7 @@
             $titre = "Défaite";
             $message = 'Vous avez perdu la partie.';
         }
+        change_state($_GET['id'], 0);
     } else {
         $titre = '';
         $message = '';
@@ -159,10 +156,14 @@
 
         <script src="script-mastermind.js"></script>
         <script>
-            <?php if (isset($error)){?>
+            <?php if (isset($error) && $error === true){?>
                 show('overlay');
                 show('error_window');
                 hide('end_game');
+            <?php } else if ($titre != '') { ?>
+                show('overlay');
+                show('end_game');
+                hide('error_window');
             <?php } else {?>
                 hide('overlay');
                 hide('error_window');

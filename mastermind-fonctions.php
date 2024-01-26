@@ -62,11 +62,27 @@
         return true;
     }
 
+    function get_opponent_id(int $game_id, int $current_player_id): int{
+        $bdd = new BDD();
+        $bdd = $bdd->get_bdd();
+
+        $select_players = $bdd->prepare("SELECT player1_ID, player2_ID FROM mastermind WHERE ID = ?");
+        $select_players->execute([$game_id]);
+        $players = $select_players->fetch(PDO::FETCH_ASSOC);
+
+        if ($players['player1_ID'] === $current_player_id){
+            return $players['player2_ID'];
+        } else {
+            return $players['player1_ID'];
+        }
+    }
+
     function display_games(): string{
         $games = get_games_by_userID($_SESSION['user']['ID']);
-
+        
         $divs = '';
         foreach ($games as $game){
+            $adversaire = get_user_by_ID(get_opponent_id($game['ID'], $_SESSION['user']['ID']));
             echo '
             <div class="game game_id-'.$game['ID'].'" onclick="show(\'game_id-'.$game['ID'].'\'); show(\'overlay\')">
                 <table>
@@ -76,7 +92,7 @@
                     </tr>
                     <tr>
                         <td>Adversaire : </td>
-                        <td>'.get_user_by_ID($game['player1_ID'])['username'].'</td>
+                        <td>'.$adversaire['username'].'</td>
                     </tr>
                     <tr>
                         <td>Tour : </td>
@@ -96,7 +112,7 @@
                     </tr>
                     <tr>
                         <td>Adversaire : </td>
-                        <td>'.get_user_by_ID($game['player1_ID'])['username'].'</td>
+                        <td>'.$adversaire['username'].'</td>
                     </tr>
                     <tr>
                         <td>Tour : </td>
@@ -164,6 +180,8 @@
     function delete_game_by_ID(int $id): void{
         $bdd = new BDD();
         $bdd = $bdd->get_bdd();
+
+        delete_logs($id);
 
         $delete_game = $bdd->prepare("DELETE FROM mastermind WHERE ID = ?");
         $delete_game->execute([$id]);
@@ -292,4 +310,23 @@
         $winner = $select_winner->fetch(PDO::FETCH_ASSOC)['player_ID'];
 
         return $winner;
+    }
+
+    function change_state(int $game_id, int $state): void{
+        $bdd = new BDD();
+        $bdd = $bdd->get_bdd();
+
+        $change_state = $bdd->prepare("UPDATE mastermind SET `state` = ? WHERE ID = ?");
+        $change_state->execute([$state, $game_id]);
+    }
+
+    function get_state(int $game_id): int{
+        $bdd = new BDD();
+        $bdd = $bdd->get_bdd();
+
+        $select_state = $bdd->prepare("SELECT `state` FROM mastermind WHERE ID = ?");
+        $select_state->execute([$game_id]);
+        $state = $select_state->fetch(PDO::FETCH_ASSOC)['state'];
+
+        return $state;
     }
