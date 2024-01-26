@@ -1,8 +1,8 @@
 <?php
     session_start();
 
-    require_once 'objets.php';
-    require_once 'mastermind-fonctions.php';
+    require_once 'ressources/objets.php';
+    require_once 'ressources/mastermind-fonctions.php';
 
     function redirect(string $location): void{
         header('Location: '.$location);
@@ -61,7 +61,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Mastermind</title>
-        <link rel="stylesheet" href="style-mastermind.css">
+        <link rel="stylesheet" href="styles/style-mastermind.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
         <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     </head>
@@ -96,7 +96,7 @@
             </select>
             <button name="create">Créer</button>
         </form>
-        <script src="script-mastermind.js"></script>
+        <script src="scripts/script-mastermind.js"></script>
         <script>
             hide('overlay');
             hide('form-create');

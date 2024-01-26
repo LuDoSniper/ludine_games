@@ -1,7 +1,7 @@
 <?php
     session_start();
 
-    require_once 'objets.php';
+    require_once 'ressources/objets.php';
 
     function redirect(): void{
         header('Location: index.php');
@@ -46,7 +46,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Home</title>
-        <link rel="stylesheet" href="style-home.css">
+        <link rel="stylesheet" href="styles/style-home.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     </head>
     <body>
@@ -72,7 +72,7 @@
             <p>BlaBla description du jeu en lui même, il faut que je fasse un texte un avec un minimum de longueur pour voir le comportement</p>
             <form action="mastermind.php" method="post"><button><span class="material-symbols-outlined icon-game">sports_esports</span> Jouer</button></form>
         </div>
-        <script src="script-home.js"></script>
+        <script src="scripts/script-home.js"></script>
         <script>
             hide('mastermind');
             hide('overlay');

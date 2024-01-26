@@ -1,7 +1,7 @@
 <?php
     session_start();
 
-    require_once 'objets.php';
+    require_once 'ressources/objets.php';
 
     function check_login(BDD $bdd, bool $session = false): bool{
 
@@ -70,7 +70,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Ludine Games</title>
-        <link rel="stylesheet" href="style-index.css">
+        <link rel="stylesheet" href="styles/style-index.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     </head>
     <body>
@@ -94,7 +94,7 @@
                     <button>Connexion</button>
                 </div>
             </form>
-            <script src="script-index.js"></script>
+            <script src="scripts/script-index.js"></script>
             <?php if ($show) {?><script>show();</script><?php } ?>
     </body>
 </html>
